@@ -1,0 +1,741 @@
+%!PS
+%%Title: Doctor strange laser disc
+%%BoundingBox: 0 0 850 850
+%%Creator: John Rehwinkel (jrehwin@mac.com)
+%%CreationDate: 23 Mar 2018
+%%Pages: 1
+%%EndComments
+%%BeginProlog
+
+/halve { 2 div } def
+/inch { 72 mul } def
+/mm   { 25.4 div inch } def
+
+/dia 280 mm def
+/margin 10 mm def
+/textsize 12 def
+/drillpip 2 mm def
+/ndrills 24 def
+/textfont /HoeflerText-Regular def
+
+/cut { 0 0 1 } def
+/lengrave { 1 0 0 } def
+/mengrave { 0 1 0 } def
+/hengrave { 0 1 1 } def
+/docu { 0 0 0 } def
+/blank { 1 1 1 } def
+
+/asin { 2 copy dup mul exch dup mul sub sqrt exch pop atan } def
+/m { moveto } def
+/l { lineto } def
+
+/drawcircle {
+	newpath
+	halve /r exch def
+	/y exch def
+	/x exch def
+	x y r 0 360 arc
+	stroke
+} def
+
+/box {	% x y w h
+	halve /hh exch def
+	halve /hw exch def
+	/y exch def
+	/x exch def
+
+	x hw sub y hh sub m
+	x hw add y hh sub l
+	x hw add y hh add l
+	x hw sub y hh add l
+	closepath
+	stroke
+} def
+
+/outsidecircletext
+{
+  circtextdict begin /radius exch def
+  /centerangle exch def
+  /ptsize exch def
+  /str exch def
+  /xradius radius ptsize 4 div add def
+
+  gsave
+
+  centerangle str findhalfangle add rotate
+
+  str {
+    /charcode exch def
+    ( ) dup 0 charcode put outsideplacechar
+  } forall
+
+  grestore
+  end
+} def
+
+/circtextdict 16 dict def circtextdict begin
+/findhalfangle
+{ stringwidth pop 2 div
+2 xradius mul pi mul div 360 mul } def
+/outsideplacechar { /char exch def
+/halfangle char findhalfangle def gsave
+halfangle neg rotate
+radius 0 translate
+-90 rotate
+char stringwidth pop 2 div neg 0 moveto char show
+grestore
+halfangle 2 mul neg rotate } def
+/insideplacechar { /char exch def
+/halfangle char findhalfangle def gsave
+halfangle rotate
+radius 0 translate
+90 rotate
+char stringwidth pop 2 div neg 0 moveto char show
+grestore
+halfangle 2 mul rotate } def
+/pi 3.1415923 def end
+
+/makeoutlinedict 7 dict def /MakeOutlineFont
+{ makeoutlinedict begin /uniqueid exch def /strokewidth exch def /newfontname exch def /basefontname exch def
+/basefontdict basefontname findfont def /numentries basefontdict maxlength 1 add def
+basefontdict /UniqueID known not
+{ /numentries numentries 1 add def } if
+/outfontdict numentries dict def
+basefontdict
+{ exch dup /FID ne
+{ exch outfontdict 3 1 roll put } { pop pop }
+ifelse
+} forall
+outfontdict /FontName newfontname put outfontdict /PaintType 2 put
+outfontdict /StrokeWidth strokewidth put outfontdict /UniqueID uniqueid put
+newfontname outfontdict definefont pop
+end } def
+
+/Symbol /Symbol-Outline 0
+
+/Symbol findfont dup /UniqueID known { /UniqueID get 1 add }
+{ pop 1 }
+ifelse
+MakeOutlineFont
+
+%%EndProlog
+%%BeginSetup
+
+<< /PageSize [850 850] >> setpagedevice
+
+textfont findfont textsize scalefont setfont
+0 setlinewidth
+
+%%EndSetup
+
+%%Page: 1 1
+%%PageBoundingBox: 0 0 850 850
+%%BeginPageSetup
+%%EndPageSetup
+
+docu setrgbcolor
+
+0.25 inch 0.50 inch m
+1.25 inch 0.50 inch l
+1.25 inch 1.50 inch l
+0.25 inch 1.50 inch l
+closepath
+stroke
+
+0.25 inch 0.25 inch m
+(1" square scale reference) show
+
+/rshow {
+	/str exch def
+	/y exch def
+
+	str stringwidth pop sub y m
+	str show
+} def
+
+/rmargin dia 0.5 inch add def
+
+rmargin 1.75 inch (cut) rshow
+rmargin 1.25 inch (light engrave) rshow
+rmargin 0.75 inch (medium engrave) rshow
+rmargin 0.25 inch (heavy engrave) rshow
+
+cut setrgbcolor
+rmargin 1 inch sub 1.90 inch m
+rmargin            1.90 inch l
+stroke
+
+lengrave setrgbcolor
+rmargin 1 inch sub 1.40 inch m
+rmargin            1.40 inch l
+stroke
+
+mengrave setrgbcolor
+rmargin 1 inch sub 0.90 inch m
+rmargin            0.90 inch l
+stroke
+
+hengrave setrgbcolor
+rmargin 1 inch sub 0.40 inch m
+rmargin            0.40 inch l
+stroke
+
+dia halve margin add dup translate	% center
+
+cut setrgbcolor
+
+0 0 dia drawcircle
+
+hengrave setrgbcolor
+
+/p {
+	/theta exch def
+	/radius exch def
+	theta sin radius mul
+	theta cos radius mul
+} def
+
+/ssize 110 mm def
+/sangle 25 def
+/sradius ssize halve 2 sqrt mul def
+
+0 90 360 {
+	/oangle exch def
+	sradius sangle oangle add p
+	oangle 0 eq { m } { l } ifelse
+} for
+closepath
+stroke
+
+lengrave setrgbcolor
+
+0 360 ndrills div 360 {
+  /theta exch def
+  dia drillpip sub halve theta p m
+  dia              halve theta p l
+  stroke
+} for
+
+mengrave setrgbcolor
+
+/sangle sangle 45 add def
+0 90 360 {
+	/oangle exch def
+	sradius sangle oangle add p
+	oangle 0 eq { m } { l } ifelse
+} for
+closepath
+stroke
+
+lengrave setrgbcolor
+
+/osize 80 mm def
+/msize 75 mm def
+/isize 60 mm def
+/oangle 0 def
+/otheta 360 8 div def
+/ohtheta otheta halve def
+/ttheta 5 def
+
+/nsides 8 def
+
+0 1 nsides {
+	/side exch def
+	/th oangle side otheta mul add def
+	osize th p
+	side 0 eq { m } { l } ifelse
+    /nth th ohtheta add def
+	msize nth ttheta sub p l
+	isize nth p l
+	msize nth ttheta add p l
+} for
+
+stroke
+
+0 0 175 mm drawcircle
+0 0 182 mm drawcircle
+
+/icircle 220 mm def
+/ocircle 260 mm def
+
+0 0 icircle drawcircle
+0 0 ocircle drawcircle
+
+/spoke {
+	/theta exch def
+	icircle halve theta p m
+	ocircle halve theta p l
+	stroke
+} def
+
+/sd 1 mm def
+/so 5 mm def
+/oo so sd halve add def
+
+/sspoke {
+  /theta exch def
+  icircle oo add halve theta p m
+  ocircle oo sub halve theta p l
+  stroke
+  icircle so add halve theta p sd drawcircle
+  ocircle so sub halve theta p sd drawcircle
+} def
+
+ 23 spoke
+% 60 spoke
+% 80 spoke
+130 spoke
+200 spoke
+290 spoke
+
+ 68 sspoke
+ 70 sspoke
+150 sspoke
+272 sspoke
+359 sspoke
+  1 sspoke
+
+/cp {
+  /h exch def
+  /theta exch def
+  h icircle add halve theta p
+} def
+
+/drawlfig {
+  /a exch def
+  /n a length 2 div 1 sub def
+
+  0 1 n {
+    /i exch def
+    a i 2 mul get
+    a i 2 mul 1 add get
+    cp
+    i 0 eq { m } { l } ifelse
+  } for
+  stroke
+} def
+
+/drawsfig {
+  /a exch def
+  /n a length 2 div 1 sub def
+
+  0 1 n {
+    /i exch def
+    a i 2 mul get
+    a i 2 mul 1 add get
+    cp sd drawcircle
+  } for
+} def
+
+/drawfig {
+  dup drawsfig drawlfig
+} def
+
+[ 3   95
+  7   95
+  3.5 70 ] drawfig
+
+[ 3 30
+  8 30
+ 10 75
+ 9.2 85 ] drawfig
+
+[ 11 95
+  11 50
+  14 60
+  15 45
+  13 25
+  13 15
+  15 30 ] drawfig
+
+[ 17 30
+  17 100 ] drawfig
+
+[ 18 100
+  18 30
+  18.3 30
+  18.3 10 ] drawfig
+
+[ 38 60
+  38 100
+  41.5 100
+  41.5 60
+  38 60 ] drawlfig
+
+% /ZapfDingbats findfont 12 scalefont setfont
+/Symbol-Outline findfont 12 scalefont setfont
+
+(LAMISIL) 8 61 ocircle 10 mm sub halve outsidecircletext
+(Trenais) 7 61 ocircle 20 mm sub halve outsidecircletext
+
+(OMVEAGAMIZALASNERISLGLQOIRNS) 8 43 icircle 10 add halve outsidecircletext
+
+(GRIVAIAL SD Enaies) 8 38.5 ocircle 10 mm sub halve outsidecircletext
+
+[ 43 50
+  46 70
+  46 50
+  48 50
+  48 70
+  49 70 ] drawfig
+
+[ 51 70
+  52.5 50
+  51 50 ] drawfig
+
+[ 55 70
+  55 50
+  60 70
+  60 50
+  62 90
+  62 50 ] drawfig
+
+[ 63 100
+  63.5 50 ] drawfig
+
+[ 72 100
+  78 100
+  72 60 ] drawfig
+
+83 sspoke
+
+[ 86 80
+  86 35
+  91 50
+  92 30
+  90.5 10
+  89.5 20 ] drawfig
+
+90 sspoke
+97 sspoke
+
+(LORAIS) 8 351 ocircle 10 mm sub halve outsidecircletext
+(GNXIJA) 8 349 ocircle 20 mm sub halve outsidecircletext
+(PMOXEJ) 8 347 ocircle 30 mm sub halve outsidecircletext
+
+[ 113 50
+  116 70
+  116 50
+  118 50
+  118 70
+  119 70 ] drawfig
+
+[ 151 70
+  152.5 50
+  151 50 ] drawfig
+
+[ 155 70
+  155 50
+  160 70
+  160 50
+  162 90
+  162 50 ] drawfig
+
+[ 163 100
+  163.5 50 ] drawfig
+
+[ 172 100
+  178 100
+  172 60 ] drawfig
+
+
+[ 108 60
+  108 100
+  111.5 100
+  111.5 60
+  108 60 ] drawlfig
+
+[ 155 70
+  155 50
+  160 70
+  160 50
+  162 90
+  162 50 ] drawfig
+
+[ 163 100
+  163.5 50 ] drawfig
+
+
+[ 172 100
+  178 100
+  172 60 ] drawfig
+
+[ 186 80
+  186 35
+  191 50
+  192 30
+  190.5 10
+  189.5 20 ] drawfig
+
+(LEIBAU ONYGMA) 8 330 ocircle 35 mm sub halve outsidecircletext
+(REHWINKEL ELIHU) 8 329 ocircle 10 mm sub halve outsidecircletext
+
+[ 132 100
+  138  95
+  133  60 ] drawfig
+
+[ 132  20
+  140  20
+  145  50
+  143  70 ] drawfig
+
+[ 147  30
+  147 110 ] drawfig
+
+[ 147  38
+  149  43 ] drawlfig
+
+[ 146.2 80
+  148   79 ] drawlfig
+
+[ 166 60
+  166 100
+  169.5 100
+  169.5 60
+  166 60 ] drawlfig
+
+[ 167.7 75
+  167.8 75 ] drawlfig
+
+(NYSAG) 8 271 ocircle 28 mm sub halve outsidecircletext
+(GARLIC) 8 256 ocircle 13 mm sub halve outsidecircletext
+
+[ 203   95
+  207   95
+  203.5 70 ] drawfig
+
+[ 203 30
+  208 30
+  210 75
+  209.2 85 ] drawfig
+
+[ 211 95
+  211 50
+  214 60
+  215 45
+  213 25
+  213 15
+  215 30 ] drawfig
+
+[ 217 30
+  217 100 ] drawfig
+
+[ 218 100
+  218 30
+  218.3 30
+  218.3 10 ] drawfig
+
+[ 221 60
+  221 100
+  224.5 100
+  224.5 60
+  221 60 ] drawlfig
+
+[ 243 50
+  246 70
+  246 50
+  248 50
+  248 70
+  249 70 ] drawfig
+
+[ 251 70
+  252.5 50
+  251 50 ] drawfig
+
+[ 255 70
+  255 50
+  260 70
+  260 50
+  262 90
+  262 50 ] drawfig
+
+[ 263 100
+  263.5 50 ] drawfig
+
+[ 272 100
+  278 100
+  272 60 ] drawfig
+
+(REIGNING KING T'CHALLAH) 8 215 ocircle 35 mm sub halve outsidecircletext
+
+[ 240 50
+  240 90 ] drawfig
+
+[ 238 90
+  235 90 ] drawfig
+
+[ 238 70
+  235 70 ] drawfig
+
+[ 238 50
+  235 50 ] drawfig
+
+[ 233 50
+  233 70 ] drawfig
+
+[ 232 50
+  232 70 ] drawfig
+
+[ 231 70
+  231 90 ] drawfig
+
+[ 229 70
+  229 90 ] drawfig
+
+[ 227 70
+  227 90 ] drawfig
+
+[ 229 50
+  227 50 ] drawfig
+
+[ 266 60
+  266 100
+  269.5 100
+  269.5 60
+  266 60 ] drawlfig
+
+(\340\345\252\312\246\267\266\261) 8 188 ocircle 35 mm sub halve outsidecircletext
+
+(Opchaya pisitechi) 8 198 ocircle 8 mm sub halve outsidecircletext
+
+[ 275 30
+  284 40
+  280 45
+  285 60
+  281 65
+  287 72
+] drawfig
+
+[ 278 80
+  284 90
+  289 80 ] drawfig
+
+[ 286 20
+  287 35
+  288 20
+  286 20 ] drawlfig
+
+293 sspoke
+
+[ 292 30
+  298 30 ] drawlfig
+
+(Pistil) 8 153 ocircle 12 mm sub halve outsidecircletext
+(TIKIL) 8 148 ocircle 21 mm sub halve outsidecircletext
+(GOMEN) 8 147 ocircle 33 mm sub halve outsidecircletext
+
+[ 306 60
+  306 100
+  309.5 100
+  309.5 60
+  306 60 ] drawlfig
+
+312 sspoke
+314 sspoke
+
+[ 317 100
+  317 50
+  321 50
+  321 30 ] drawfig
+
+(\302\300) 8 132 ocircle 35 mm sub halve outsidecircletext
+(HAPPENSTANCE OSSIFRAGE) 8 117 ocircle 11 mm sub halve outsidecircletext
+
+[ 323 20
+  326 40
+  326 20
+  328 20
+  328 40
+  329 40 ] drawfig
+
+[ 331 40
+  332.5 20
+  331 20 ] drawfig
+
+[ 335 40
+  335 20
+  340 40
+  340 20
+  342 60
+  342 20 ] drawfig
+
+[ 343 70
+  343.5 20 ] drawfig
+
+[ 352 70
+  358 70
+  352 30 ] drawfig
+
+[ 346 20
+  346 60
+  349.5 60
+  349.5 20
+  346 20 ] drawlfig
+
+/starrotate 9 def
+/stardia 45 mm def
+/nstarpoints 8 def
+/nstarskip 3 def
+/starang 360 nstarpoints div def
+
+hengrave setrgbcolor
+
+0 1 nstarpoints {
+  /point exch def
+  stardia halve starang point mul starrotate add p m
+  stardia halve starang point nstarskip add mul starrotate add p l
+  stroke
+} for
+
+0 0 stardia 2 mm add drawcircle
+
+0 0 stardia 26 mm add drawcircle
+
+/tspan 2 def
+
+/res 1000 def
+
+/mkrand {
+  rand exch res mul cvi mod res div
+} def 
+
+/mkrpoint {
+  minradius rspan mkrand add
+  theta tspan mkrand add
+  p
+} def
+
+/drawsring {
+  /maxangle exch def
+  /maxradius exch halve def
+  /minradius exch halve def
+  /rspan maxradius minradius sub def
+
+  0 1 maxangle {
+    /theta exch def
+
+    theta 0 eq { mkrpoint m } if
+
+    mkrpoint
+    mkrpoint
+    mkrpoint
+ 
+    curveto
+  } for
+
+  stroke
+} def
+
+lengrave setrgbcolor
+
+262 mm 278 mm 720 drawsring
+
+mengrave setrgbcolor
+
+189 mm 199 mm 720 drawsring
+
+showpage
+
+%%EndPage
+%%Trailer
+%%EOF
